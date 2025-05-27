@@ -1,3 +1,5 @@
-test
-secondLargestIntInArray
-twoPointerSumInArray
+*
+
+!.gitattributes
+!.gitignore
+!*.cpp
