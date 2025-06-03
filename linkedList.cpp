@@ -34,6 +34,10 @@ public:
     // Insert link at end of LL
     void insertAtEnd(int data){
         Node* ptr = this->head;
+        if (head == NULL || head->next == NULL) {
+            cout << "List is empty or has only one node. No reversal needed." << endl;
+            return;
+        }
         while (ptr->next != NULL){
             ptr = ptr->next;
         }
@@ -88,6 +92,34 @@ public:
         }
         cout << endl;
     }
+
+    // Finding loops/cycles in the linked list
+    void findLoopInLinkedList(){
+        Node* slow = head; Node* fast = head;
+        while (fast != NULL && fast->next != NULL){
+            slow = slow->next;
+            fast = fast->next->next;
+            if (slow == fast){
+                cout << "There is a loop/cycle present in the linked list." << endl;
+                return;
+            }
+        }
+        cout << "There is no loop/cycle present in the linked list." << endl;
+    }
+    
+    //Reversing the linked list
+    void reverseLinkedList(){
+        Node* prev = nullptr; 
+        Node* current = head; 
+        Node* next = nullptr;
+        while (current != nullptr) {
+            next = current->next; // Store next node
+            current->next = prev; // Reverse current node's pointer
+            prev = current;       // Move prev and current one step forward
+            current = next;
+        }
+        head = prev;
+    }
 };
 
 
@@ -129,6 +161,12 @@ int main(){
     list.removeGivenNode(55);
     //Example output to verify the linked list
     list.printList();
+    //Reverse the linked list
+    list.reverseLinkedList();
+    //Example output to verify the linked list
+    list.printList();
+    //Checking loops in the linked list
+    list.findLoopInLinkedList();
 
     return 0;
 }
