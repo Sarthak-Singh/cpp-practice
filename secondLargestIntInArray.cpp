@@ -2,8 +2,8 @@
 using namespace std;
 
 void printsecondlargest(int arr[], int size) {
-    int first = arr[0], second = arr[1];
-    for (int i = 2; i < size; i++) {
+    int first = arr[0], second;
+    for (int i = 1; i < size; i++) {
         if (arr[i] > first) {
             second = first;
             first = arr[i];
