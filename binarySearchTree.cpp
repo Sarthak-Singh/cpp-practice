@@ -9,6 +9,7 @@ class Node{
     public:
         Node(int data){
             this->data = data;
+            left = right = NULL;
         }
 
         // Insert method in the BST
@@ -95,21 +96,54 @@ class Node{
             }
             cout << data << " ";
         }
+
+        // Delete node method in the BST
+        Node* deleteNode(int value){
+            // Traversing to the node
+            if (data > value && left != NULL){
+                left = left->deleteNode(value);
+            }
+            else if (data < value && right != NULL){
+                right = right->deleteNode(value);
+            }
+            // Actual Deletion
+            else{
+                // Nodes with 0 or 1 leaf nodes
+                if (left == NULL){
+                    Node* temp = right;
+                    free(this);
+                    return temp;
+                }
+                else if (right == NULL){
+                    Node* temp = left;
+                    free(this);
+                    return temp;
+                }
+                // Nodes with 2 left nodes
+                else{
+                    data = right->findMin();
+                    right = right->deleteNode(data);
+                }
+            }
+            return this;
+        }
 };
 
 int main(){
-    cout << "Enter the value of the root node: ";
-    int value;
-    cin >> value;
-    Node* tree = new Node(value);
-    cout << "Enter the number of child nodes in the tree: ";
+    Node* tree = NULL;
+    cout << "Enter the number of nodes in the tree: ";
     int size;
     cin >> size;
     for (int i = 0; i < size; i++){
         cout << "Enter element number " << i+1 << ": ";
         int value;
         cin >> value;
-        tree->insert(value);
+        if (i == 0){
+            tree = new Node(value);
+        }
+        else{
+            tree->insert(value);
+        }
     }
     cout << "===================================" << endl;
     tree->printPreOrder(); cout << " => Pre Order Traversal"; cout << endl;
@@ -122,5 +156,9 @@ int main(){
 
     cout << "The minimum value in the tree is: " << tree->findMin() << endl;
     cout << "The maximum value in the tree is: " << tree->findMax() << endl;
+
+    tree->deleteNode(15);
+
+    tree->printInOrder(); cout << " => New In Order Traversal"; cout << endl;
     return 0;
 }
