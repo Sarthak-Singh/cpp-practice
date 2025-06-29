@@ -7,6 +7,7 @@ class minIntHeap{
         int size;
         int capacity;
         vector<int> items;  // Vector representation of the Heap
+
     public:
         minIntHeap(){
             this->size = 0;
@@ -18,6 +19,7 @@ class minIntHeap{
             this->capacity = capacity;
             items.reserve(capacity);
         }
+
     private:
         // Getting the index of child or parent
         int getLeftChildIndex(int parentIndex){return parentIndex*2 + 1; }
@@ -47,8 +49,8 @@ class minIntHeap{
                 items.reserve(capacity);
             }
         }
-        
-        public:
+
+    public:
         // Return the first element or the root element of the heap, i.e. the first element in the vector
         int peek(){
             if (size == 0){
@@ -149,6 +151,7 @@ int main(){
         cin >> item;
         heap->add(item);
     }
+    cout << "================================" << endl;
     heap->print();
     heap->peek();
     heap->poll();
