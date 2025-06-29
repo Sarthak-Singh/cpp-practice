@@ -55,32 +55,66 @@ class minIntHeap{
                 cout << "There are no elements in the heap." << endl;
                 return -1;
             }
+            cout << "Peek value of the heap is: " << items[0] << endl;
             return items[0];
         }
+
         // Removes and return the root or the first element of the heap
         int poll(){
             if (size == 0){
                 cout << "There are no elements in the heap." << endl;
                 return -1;
             }
-            int item = items[0];
-            items[0] = items[size - 1];
+            int index = 0;
+            int item = items[index];
+            items[index] = items[size - 1];
             size --;
-            bubbleDown();
+            bubbleDown(index);
+            cout << "Polled out value from the heap is: " << item << endl;
             return item;
+        }
+
+        void remove(int item){
+            int index = find(item);
+            if (index != -1){
+                items[index] = items[size-1];
+                size --;
+                bubbleDown(index);
+            }
         }
 
         // Adds the element to the end of the heap
         void add(int item){
             ensureExtraCapacity();
-            items[size] = item;
+            int index = size;
+            items[index] = item;
             size ++;
-            bubbleUp();
+            bubbleUp(index);
         }
 
+        // To print the heap's corresponding vector
+        void print(){
+            for (int i = 0; i < size; i++){
+                cout << items[i] << " ";
+            }
+            cout << endl;
+        }
+
+        // To check if an element exists in the heap, and if it does, return its index
+        int find(int item){
+            for (int index = 0; index < size; index++){
+                if (items[index] == item){
+                    cout << "The element '" << item << "' was found at index '" << index << "' in the heap." << endl;
+                    return index;
+                }
+            }
+            cout << "The element '" << item << "' was not found in the heap." << endl;
+            return -1;
+        }
+
+    private:
         // Heapify or Bubble methods to maintain the property of the min heap
-        void bubbleDown(){
-            int index = 0;
+        void bubbleDown(int index){
             while (hasLeftChild(index)){
                 int smallerChildIndex = getLeftChildIndex(index);
                 if (hasRightChild(index) && rightChild(index) < leftChild(index)){
@@ -96,20 +130,11 @@ class minIntHeap{
                 index = smallerChildIndex;
             }
         }
-        void bubbleUp(){
-            int index = size - 1;
+        void bubbleUp(int index){
             while (hasParent(index) && parent(index) > items[index]){
                 swap(index,getParentIndex(index));
                 index = getParentIndex(index);
             }
-        }
-
-        // To print the heap's corresponding vector
-        void print(){
-            for (int i = 0; i < size; i++){
-                cout << items[i] << " ";
-            }
-            cout << endl;
         }
 };
 
@@ -125,8 +150,10 @@ int main(){
         heap->add(item);
     }
     heap->print();
-    cout << "Peek value of the heap is: " << heap->peek() << endl;
+    heap->peek();
+    heap->poll();
     heap->print();
-    cout << "Polling out from the heap. Value returned is: " << heap->poll() << endl;
+    heap->find(6);
+    heap->remove(11);
     heap->print();
 }
