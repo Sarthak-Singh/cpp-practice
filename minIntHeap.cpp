@@ -36,7 +36,7 @@ class minIntHeap{
         int rightChild(int index){return items[getRightChildIndex(index)]; }
         int parent(int index){return items[getParentIndex(index)]; }
         
-        // Swapping two indices; used when deleting nodes from the Heap
+        // Swapping two values in the heap, used in bubbling up and down.
         void swap(int indexOne, int indexTwo){
             int temp = items[indexOne];
             items[indexOne] = items[indexTwo];
@@ -76,6 +76,7 @@ class minIntHeap{
             return item;
         }
 
+        // Function to find and delete a particular value in the given heap
         void remove(int item){
             int index = find(item);
             if (index != -1){
