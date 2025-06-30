@@ -89,7 +89,7 @@ class minIntHeap{
         void add(int item){
             ensureExtraCapacity();
             int index = size;
-            items[index] = item;
+            items.push_back(item);
             size ++;
             bubbleUp(index);
         }
